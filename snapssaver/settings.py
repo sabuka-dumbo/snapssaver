@@ -10,20 +10,18 @@ import dj_database_url
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Security Settings (Critical for Production)
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-#3o59s_al*!v8r31+&v1g8(pd)$(i(ejb*+wn3a45)v=ebyu)0')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Default to False in production
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-
-ALLOWED_HOSTS = ['*']
-
+# Add Heroku's app domain when deployed
+if 'DYNO' in os.environ:
+    ALLOWED_HOSTS.append('your-heroku-app-name.herokuapp.com')  # Replace with your actual app name
 
 # Application definition
-
 INSTALLED_APPS = [
-    'snapsav',  # your app
+    'snapsav',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,7 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # should come early
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Correct placement
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,7 +46,7 @@ ROOT_URLCONF = 'snapssaver.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # or [BASE_DIR / 'templates'] if you have templates folder
+        'DIRS': [BASE_DIR / 'templates'],  # Add if you have project-wide templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +61,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'snapssaver.wsgi.application'
 
+# Database Configuration (Heroku uses PostgreSQL)
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,21 +84,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# Static files
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Required for collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Your app-specific static files
 
+# Whitenoise compression and caching
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# HTTPS/SSL Security Headers (for production)
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
