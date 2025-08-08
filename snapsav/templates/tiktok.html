@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Video Downloader</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+</head>
+<body>
+
+    <div class="Instagram-div" style="background: black;">
+
+        <!-- Navigation Buttons -->
+        <div class="container2">
+            <button class="my-button1" onclick="window.location.href='/'">Instagram</button>
+            <button class="my-button2" onclick="window.location.href='/facebook/'">Facebook</button>
+            <button class="my-button3" onclick="window.location.href='/tiktok/'">TikTok</button>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title">Download TikTok Videos Instantly</h1>
+
+        <!-- Input Area -->
+        <div class="input">
+            <input type="text" id="url-input" placeholder="Paste TikTok video URL here" class="input-field">
+            <button class="my-button4" id="download-button">Download</button>
+        </div>
+
+        <!-- Advertisement Block -->
+        <div class="ad">
+            <h5>Advertisement</h5>
+        </div>
+    </div>
+
+    <!-- Why Us Section -->
+    <section class="why-us">
+        <h2>Why Choose Our Downloader?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>No Watermark</h3>
+                <p>Download clean TikTok videos without any watermark, for free.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Unlimited Downloads</h3>
+                <p>Grab as many videos as you want with no restrictions or ads.</p>
+            </div>
+            <div class="feature-card">
+                <h3>High Speed</h3>
+                <p>Fast and reliable downloads powered by our optimized backend.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How-To Section -->
+    <section class="how-to">
+        <h2>How to Use</h2>
+        <ol>
+            <li>Copy the TikTok video URL you want to download.</li>
+            <li>Paste it into the input field above.</li>
+            <li>Click the "Download" button.</li>
+            <li>Your video will download in a few seconds.</li>
+        </ol>
+    </section>
+
+    <!-- Supported Platforms -->
+    <section class="supported">
+        <h2>Supported Platforms</h2>
+        <div class="supported-buttons">
+            <span class="platform-btn">TikTok</span>
+            <span class="platform-btn">Instagram</span>
+            <span class="platform-btn">Facebook</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 TikTok Video Downloader. All rights reserved.
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // CSRF token helper for Django
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Handle Download
+        document.getElementById('download-button').addEventListener('click', function () {
+            const urlInput = document.getElementById('url-input').value.trim();
+
+            if (!urlInput) {
+                alert("Please enter a TikTok video URL.");
+                return;
+            }
+
+            this.textContent = "Downloading...";
+
+            fetch('/tiktok-download/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: `url=${encodeURIComponent(urlInput)}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to download video.");
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "tiktok_video.mp4";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                document.getElementById('download-button').textContent = "Download";
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+                document.getElementById('download-button').textContent = "Download";
+            });
+        });
+    </script>
+
+</body>
+</html>

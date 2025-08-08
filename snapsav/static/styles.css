@@ -1,0 +1,296 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdfdfd;
+    color: #333;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header Section */
+.Instagram-div {
+    width: 100%;
+    padding: 40px 20px 80px 20px;
+    background: linear-gradient(135deg, #FD1D1D 0%, #833AB4 70%, #405DE6 100%);
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+}
+
+/* Nav Buttons */
+.container2 {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(72, 185, 255, 0.4);
+    border-radius: 15px;
+    overflow: hidden;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.my-button1,
+.my-button2,
+.my-button3 {
+    flex: 1;
+    padding: 15px 10px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.my-button1:hover,
+.my-button2:hover,
+.my-button3:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Title */
+.title {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Input Section */
+.input {
+    margin: 40px auto 0 auto;
+    width: 90%;
+    max-width: 700px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+    padding: 15px;
+    border: none;
+    background-color: #e0e0e0;
+    color: #333;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+}
+
+/* Download Button */
+.my-button4 {
+    border: none;
+    padding: 15px 20px;
+    background: linear-gradient(45deg, #266FDC 0%, #153C76 100%);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 0 10px 10px 0;
+}
+
+.my-button4:hover {
+    background: linear-gradient(45deg, #153C76 0%, #266FDC 100%);
+}
+
+/* Ad Section */
+.ad {
+    margin: 60px auto 0 auto;
+    width: 90%;
+    max-width: 700px;
+    height: 250px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ad h5 {
+    color: #888;
+    font-size: 16px;
+}
+
+/* Feature Section */
+.why-us {
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.feature-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    width: 280px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 20px;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: #666;
+}
+
+/* How-To Section */
+.how-to {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.how-to h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.how-to ol {
+    list-style: decimal inside;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+}
+
+.how-to li {
+    margin-bottom: 15px;
+}
+
+/* Supported Videos Section */
+.supported {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.supported-buttons {
+    margin-top: 15px;
+}
+
+.platform-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin: 6px;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.platform-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .input {
+        grid-template-columns: 1fr auto;
+    }
+
+    .container2 {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .my-button1,
+    .my-button2,
+    .my-button3 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .input {
+        flex-direction: column;
+        grid-template-columns: 1fr;
+    }
+
+    .my-button4 {
+        border-radius: 0 0 10px 10px;
+        width: 100%;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 22px;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+
+    .my-button4 {
+        font-size: 16px;
+    }
+
+    .how-to h2 {
+        font-size: 22px;
+    }
+
+    .platform-btn {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}

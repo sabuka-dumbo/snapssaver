@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Video Downloader</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <style>
+        .Instagram-div {
+  background: linear-gradient(-45deg, #1877F2, #0F5ACF, #1877F2, #0F5ACF);
+  background-size: 400% 400%;
+  animation: fbGradientAnimation 15s ease infinite;
+  color: white; /* keep text readable on blue background */
+}
+
+@keyframes fbGradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="Instagram-div">
+
+        <!-- Navigation -->
+        <div class="container2">
+            <button class="my-button1" onclick="window.location.href='/'">Instagram</button>
+            <button class="my-button2" onclick="window.location.href='/facebook/'">Facebook</button>
+            <button class="my-button3" onclick="window.location.href='/tiktok/'">TikTok</button>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title">Download Facebook Videos Easily</h1>
+
+        <!-- Input & Download -->
+        <div class="input">
+            <input type="text" id="url-input" placeholder="Paste Facebook video URL here" class="input-field">
+            <button class="my-button4" id="download-button">Download</button>
+        </div>
+
+        <!-- Advertisement Block -->
+        <div class="ad">
+            <h5>Advertisement</h5>
+        </div>
+    </div>
+
+    <!-- Why Us Section -->
+    <section class="why-us">
+        <h2>Why Choose Our Downloader?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>No Watermark</h3>
+                <p>Get clean Facebook video downloads with no annoying watermarks.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Free & Unlimited</h3>
+                <p>Enjoy unlimited video downloads without signing up or paying.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Fast & Secure</h3>
+                <p>Secure, high-speed downloads with no popups or redirects.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How-To Section -->
+    <section class="how-to">
+        <h2>How to Download from Facebook</h2>
+        <ol>
+            <li>Find the Facebook video you want to download.</li>
+            <li>Copy its URL (right-click on video or use share options).</li>
+            <li>Paste the URL into the input box above.</li>
+            <li>Click the "Download" button — we’ll take care of the rest!</li>
+        </ol>
+    </section>
+
+    <!-- Supported Platforms Section -->
+    <section class="supported">
+        <h2>We Also Support</h2>
+        <div class="supported-buttons">
+            <span class="platform-btn">Facebook</span>
+            <span class="platform-btn">Instagram</span>
+            <span class="platform-btn">TikTok</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Facebook Video Downloader. All rights reserved.
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.getElementById('download-button').addEventListener('click', function () {
+            const button = this;
+            const urlInput = document.getElementById('url-input').value.trim();
+
+            if (!urlInput) {
+                alert("Please enter a Facebook video URL.");
+                return;
+            }
+
+            button.textContent = "Downloading...";
+
+            fetch('/facebook-download/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: `url=${encodeURIComponent(urlInput)}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to download video.");
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "facebook_video.mp4";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                button.textContent = "Download";
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+                button.textContent = "Download";
+            });
+        });
+    </script>
+
+</body>
+</html>
