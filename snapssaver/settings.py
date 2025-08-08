@@ -107,3 +107,7 @@ if not DEBUG:
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEBUG = True  # Disable after fixing!
+
+ALLOWED_HOSTS = ['snapssaver-ca4277de498a.herokuapp.com', '127.0.0.1']
